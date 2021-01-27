@@ -4,6 +4,11 @@ $sql_leer = 'SELECT * FROM `catalogo`';
 $gsent = $pdo->prepare($sql_leer);
 $gsent->execute();
 
+$sql_leer_now = 'SELECT * FROM `peli_actual`';
+$gsent_now = $pdo->prepare($sql_leer_now);
+$gsent_now->execute();
+$resultado_now = $gsent_now->fetch();
+
 $visto = [];
 $resultado = $gsent->fetchAll();
 foreach ($resultado as $dato) {
@@ -37,8 +42,14 @@ include('header.php');
 <div class="container caja-interfaz">
   <div class="frontstage">
     <div class="viendo">
-      <section><h3>Día de Series</h3> <p> Miercoles 12 | Mandalorian</p> </section>
-      <section><h3>Día de Películas</h3> <p>Domingo 20 | Super 8</p> </section>
+      <section>
+        <h3>Día de Series</h3>
+        <p><?php echo $resultado_now['date-Serie'] ?> | <?php echo $resultado_now['Serie'] ?></p>
+      </section>
+      <section>
+        <h3>Día de Películas</h3>
+        <p><?php echo $resultado_now['date-Peli'] ?> | <?php echo $resultado_now['pelicula'] ?></p>
+      </section>
     </div>
     <div class="grid-container container-center column-7 gap-10 box-3d">
       <?php foreach ($resultado as $key => $dato) : ?>
